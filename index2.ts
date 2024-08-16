@@ -1,37 +1,31 @@
-const userName1 = "Minji";
-let userName2: string | number = "Sumin";
-userName2 = 4;
-
-type Job = "student" | "teacher" | "developer";
-
 interface User {
     name: string;
-    job: Job;
+    job: "student" | "teacher" | "developer";
 }
 
 const user: User = {
     name: "Sumin",
-    job: "student"
+    job: "student",
 };
 
-interface Animals {
+interface Animal {
     name: string | number;
     animal: 'dog' | 'cat' | 'cow' | 'bird' | 'pig';
 }
 
-interface Pet {
+interface PetInterface {
     name: "pet";
     age: number;
     sound(): void;
 }
 
-interface Cattle {
+interface CattleInterface {
     name: "cattle";
     age: number;
     noise(): void;
 }
 
-function getAnimals(animal: Pet | Cattle) {
+function getAnimals(animal: PetInterface | CattleInterface) {
     console.log(animal.age);
     if (animal.name === "pet") {
         animal.sound();
@@ -40,22 +34,26 @@ function getAnimals(animal: Pet | Cattle) {
     }
 }
 
-interface Pet2 {
+interface Pet {
     name: string;
     sound(): void;
+    petType: string; // Pet에 새로운 속성 추가
+    gender: string;  // Pet에 새로운 속성 추가
 }
 
-interface Cattle2 {
+interface Cattle {
     name: string;
     age: number;
     color: string;
 }
 
-const cattlePet: Pet2 & Cattle2 = {
+const cattlePet: Pet & Cattle = {
     name: "stanley",
     sound() {},
     color: "black and white",
     age: 5,
+    petType: "dog",   // petType 추가
+    gender: "male",   // gender 추가
 };
 
 function hello(name?: string) {
@@ -68,7 +66,6 @@ function hello2(name = "there") {
 
 const result1 = hello();
 const result2 = hello("Sumin");
-//const result3 = hello(123456); // Error: Argument of type 'number' is not assignable to parameter of type 'string'.
 
 function hello3(grade: number | undefined, name: string): string {
     if (grade !== undefined) {
@@ -90,30 +87,38 @@ console.log(sum(1, 3, 5)); // 9
 console.log(sum(1, 3, 5, 7, 9)); // 25
 
 // Using `this` type
-interface Pet {
+interface MyPet {
     name: string;
 }
 
-const Suzi: Pet = { name: 'Suzi' };
+const myPet2: MyPet = { name: 'suzi' };
 
-function callPet(this: Pet, age: number, feed: 'food' | 'water') {
+function callPet(this: MyPet, age: number, feed: 'food' | 'water') {
     console.log(this.name, age, feed);
 }
 
-const p = callPet.bind(Suzi);
+const p = callPet.bind(myPet2);
 p(7, 'water');
 
+interface MyPet2 {
+    name: string;
+}
+
+interface MyPetWithAge extends MyPet2 {
+    age: number;
+}
+
 function adopt(name: string, age: string): string;
-function adopt(name: string, age: number): Pet;
-function adopt(name: string, age: number | string): Pet | string {
+function adopt(name: string, age: number): MyPetWithAge;
+function adopt(name: string, age: number | string): MyPetWithAge | string {
     if (typeof age === "number") {
-        return { name, age };
+        return { name, age }; // Now this is valid because MyPet includes 'age'
     } else {
         return "Please enter the age as a number.";
     }
 }
 
-const kate = adopt("Kate", 2) as Pet;
+const kate = adopt("Kate", 2) as MyPet;
 const steve = adopt("Steve", "1") as string;
 
 const watch = {

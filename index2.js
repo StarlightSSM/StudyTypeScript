@@ -8,12 +8,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 var _a;
-var userName1 = "Minji";
-var userName2 = "Sumin";
-userName2 = 4;
 var user = {
     name: "Sumin",
-    job: "student"
+    job: "student",
 };
 function getAnimals(animal) {
     console.log(animal.age);
@@ -29,6 +26,8 @@ var cattlePet = {
     sound: function () { },
     color: "black and white",
     age: 5,
+    petType: "dog", // petType 추가
+    gender: "male", // gender 추가
 };
 function hello(name) {
     return "Hello, my name is ".concat(name || "there");
@@ -39,7 +38,6 @@ function hello2(name) {
 }
 var result1 = hello();
 var result2 = hello("Sumin");
-//const result3 = hello(123456); // Error: Argument of type 'number' is not assignable to parameter of type 'string'.
 function hello3(grade, name) {
     if (grade !== undefined) {
         return "Hello, ".concat(name, ", You are in the ").concat(grade, "th grade.");
@@ -60,15 +58,15 @@ function sum() {
 }
 console.log(sum(1, 3, 5)); // 9
 console.log(sum(1, 3, 5, 7, 9)); // 25
-var Suzi = { name: 'Suzi' };
+var myPet2 = { name: 'suzi' };
 function callPet(age, feed) {
     console.log(this.name, age, feed);
 }
-var p = callPet.bind(Suzi);
+var p = callPet.bind(myPet2);
 p(7, 'water');
 function adopt(name, age) {
     if (typeof age === "number") {
-        return { name: name, age: age };
+        return { name: name, age: age }; // Now this is valid because MyPet includes 'age'
     }
     else {
         return "Please enter the age as a number.";
